@@ -79,11 +79,11 @@ namespace code.Handlers
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM Usuario" +
-                    $" WHERE NombreUsuario = {userName} AND Contraseña = {password}", 
+                    $" WHERE NombreUsuario = '{userName}' AND Contraseña = '{password}'", 
                     connection);
                 using(SqlDataReader dataReader = command.ExecuteReader())
                 {
-                    if (dataReader.HasRows)
+                    if (dataReader.HasRows && dataReader.Read())
                     {
                         Console.WriteLine("\n %%%%% HAS INICIADO SESION %%%%%\n");
                         user = new User(dataReader.GetInt64(0), dataReader.GetString(1),

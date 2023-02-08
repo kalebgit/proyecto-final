@@ -99,7 +99,7 @@ namespace code.Handlers
         {
             if (products.Count > 0)
             {
-                Console.WriteLine("{0, -5}{1, -30}{2, -10}{3, -10}{4, -10}",
+                Console.WriteLine("{0, -5}{1, -30}{2, -20}{3, -20}{4, -20}",
                 "Id", "Description", "Cost", "Selling Price", "Stock");
                 foreach (Product product in products)
                 {

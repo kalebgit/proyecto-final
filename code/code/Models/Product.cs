@@ -101,7 +101,7 @@ namespace code.Models
         // metodo to string
         public override string ToString()
         {
-            return String.Format("{0, -5}{1, -30}{2, -10}{3, -10}{4, -10}",
+            return String.Format("{0, -5}{1, -30}{2, -20}{3, -20}{4, -20}",
                 _id, _description, _cost, _sellingPrice, _stock);
         }
     }

@@ -26,11 +26,11 @@ namespace code
 
             Console.WriteLine("============== PROGRAMA DE SISTEMA DE GESTION " +
                 "==============\n\n");
-            int opcion, id;
+            int opcion = 0;
             do
             {
-                
-                Console.WriteLine("Ingresa la opcion que deseas realizar\n\n" +
+                int id = 0;
+                Console.WriteLine("\n\nIngresa la opcion que deseas realizar\n\n" +
                 "1) Ver usuario de acuerdo a un id\n" +
                 "2) Ver productos ingresados por un usuario (usando id de usuario)\n" +
                 "3) Ver productos vendidos por un usuario\n" +
@@ -44,59 +44,66 @@ namespace code
                         Console.WriteLine("\n\n------ Funcion para ver usuario de" +
                             " acuerdo a un id ------\n");
 
+                        User user = null;
                         users = UserHandler.SelectAll();
                         do
                         {
                             Console.Write("Escribe el usuario: ");
-                        } while (int.TryParse(Console.ReadLine(), out id));
+                        } while (!int.TryParse(Console.ReadLine(), out id));
 
                         for (int i = 0; i < users.Count; i++)
                         {
-                            if (!(userFilter(users[i], id)))
+                            if ((userFilter(users[i], id)))
                             {
-                                users.RemoveAt(i);
+                                user = users[i];
+                                break;
                             }
                         }
-
+                        users.Clear();
+                        users.Add(user);
                         UserHandler.ShowUsers(users);
                         break;
                     case 2:
                         Console.WriteLine("\n\n------ Funcion para ver productos " +
                             "ingresados por un usuario (usando id de usuario) ------\n");
-
+                        List<Product> userProducts = new List<Product>();
                         products = prodHandler.SelectAll();
                         do
                         {
                             Console.Write("Escribe el usuario: ");
-                        } while (int.TryParse(Console.ReadLine(), out id));
+                        } while (!int.TryParse(Console.ReadLine(), out id));
 
                         for (int i = 0; i < products.Count; i++)
                         {
-                            if (!(prodFilter(products[i], id)))
+                            if ((prodFilter(products[i], id)))
                             {
-                                products.RemoveAt(i);
+                                userProducts.Add(products[i]);
                             }
                         }
-
-                        ProductHandler.ShowProducts(products);
+                        products.Clear();
+                        ProductHandler.ShowProducts(userProducts);
                         break;
                     case 3:
                         Console.WriteLine("\n\n------ Funcion para ver productos " +
                             "vendidos por un usuario ------\n");
+                        user = null;
                         do
                         {
                             Console.Write("Escribe el usuario: ");
-                        } while (int.TryParse(Console.ReadLine(), out id));
+                        } while (!int.TryParse(Console.ReadLine(), out id));
 
                         users = UserHandler.SelectAll();
                         for (int i = 0; i < users.Count; i++)
                         {
-                            if (!userFilter(users[i], id))
+                            if (userFilter(users[i], id))
                             {
-                                users.RemoveAt(i);
+                                user = users[i];
+                                break;
                             }
                         }
-
+                        users.Clear();
+                        if(user != null)
+                            users.Add(user);
                         if (users.Count == 1)
                         {
                             ProductHandler.ShowProducts(users[0].SoldProducts);
@@ -105,19 +112,24 @@ namespace code
                     case 4:
                         Console.WriteLine("\n\n------ Funcion para ver ventas " +
                             "realizadas por un usuario ------\n");
+                        user = null;
                         do
                         {
                             Console.Write("Escribe el usuario: ");
-                        } while (int.TryParse(Console.ReadLine(), out id));
+                        } while (!int.TryParse(Console.ReadLine(), out id));
 
                         users = UserHandler.SelectAll();
                         for (int i = 0; i < users.Count; i++)
                         {
-                            if (!userFilter(users[i], id))
+                            if (userFilter(users[i], id))
                             {
-                                users.RemoveAt(i);
+                                user = users[i];
+                                break;
                             }
                         }
+                        users.Clear();
+                        if (user != null)
+                            users.Add(user);
 
                         if (users.Count == 1)
                         {
@@ -133,7 +145,7 @@ namespace code
                         Console.Write("Ingresa contrasenia: ");
                         string password = Console.ReadLine();
 
-                        User user = UserHandler.LogIn(userName, password);
+                        user = UserHandler.LogIn(userName, password);
 
                         Console.WriteLine("\nInformacion del usuario que ha iniciado" +
                             "sesion");
@@ -143,6 +155,7 @@ namespace code
                         Console.WriteLine(user);
                         break;
                     default:
+                        Console.WriteLine("\n OPCION NO VALIDA INTENTE DE NUEVEO \n");
                         break;
 
                 }
