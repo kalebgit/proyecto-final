@@ -155,16 +155,16 @@ namespace code
         public static int IsInt(string valorIngresado)
         {
             int num;
-                bool boolean;
-                do
-                {
-
-                    Console.Write("\n---------- No ingresaste valor correcto ----------\n" +
+            bool boolean;
+            boolean = int.TryParse(valorIngresado, out num);
+            while (!boolean)
+            {
+                Console.Write("\n---------- No ingresaste valor correcto ----------\n" +
                     "\nPon un valor correcto: ");
-                    boolean = int.TryParse(Console.ReadLine(), out num);
-                    if (num <= 0 || num > 5)
-                        boolean = false;
-                } while (!boolean);
+                boolean = int.TryParse(Console.ReadLine(), out num);
+                if (num <= 0 || num > 5)
+                    boolean = false;
+            }
             return num;
         }
     }

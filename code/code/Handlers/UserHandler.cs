@@ -47,6 +47,7 @@ namespace code.Handlers
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                connection.Open();
                 SqlCommand command = new SqlCommand($"SELECT * FROM Usuario",
                     connection);
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -76,6 +77,7 @@ namespace code.Handlers
             User user;
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                connection.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM Usuario" +
                     $" WHERE NombreUsuario = {userName} AND Contraseña = {password}", 
                     connection);
@@ -103,6 +105,7 @@ namespace code.Handlers
             List<Product> products = new List<Product>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                connection.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM Producto " +
                     $"WHERE IdUsuario = {userId}", connection);
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -126,6 +129,7 @@ namespace code.Handlers
             List<Sale> sales = new List<Sale>();
             using(SqlConnection connection = new SqlConnection(_connectionString))
             {
+                connection.Open();
                 SqlCommand command = new SqlCommand($"SELECT * FROM Venta " +
                     $"WHERE IdUsuario = {userId}", connection);
                 using(SqlDataReader dataReader = command.ExecuteReader())

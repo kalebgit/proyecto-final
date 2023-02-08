@@ -22,34 +22,33 @@ namespace code.Handlers
         public static object IsDecimal(object obj)
         {
             decimal num;
-                bool boolean;
-                do
-                {
-
-                    Console.Write("\n---------- No ingresaste valor correcto ----------\n" +
+            bool boolean;
+            boolean = decimal.TryParse((string)obj, out num);
+            while (!boolean)
+            {
+                Console.Write("\n---------- No ingresaste valor correcto ----------\n" +
                     "\nPon un valor correcto: ");
-                    boolean = decimal.TryParse(Console.ReadLine(), out num);
-                    if (num <= 0)
-                        boolean = false;
-
-                } while (!boolean);
-                obj = num;
+                boolean = decimal.TryParse(Console.ReadLine(), out num);
+                if (num <= 0)
+                    boolean = false;
+            }
+            obj = num;
             return obj;
         }
         public static object IsInt(object obj)
         {
             int num;
-                bool boolean;
-                do
-                {
-
-                    Console.Write("\n---------- No ingresaste valor correcto ----------\n" +
+            bool boolean;
+            boolean = int.TryParse((string)obj, out num);
+            while (!boolean)
+            {
+                Console.Write("\n---------- No ingresaste valor correcto ----------\n" +
                     "\nPon un valor correcto: ");
-                    boolean = int.TryParse(Console.ReadLine(), out num);
-                    if (num <= 0)
-                        boolean = false;
-                } while (!boolean);
-                obj = num;
+                boolean = int.TryParse(Console.ReadLine(), out num);
+                if (num <= 0)
+                    boolean = false;
+            }
+            obj = num;
             return obj;
         }
         public static object NonNullable(object obj)
@@ -70,6 +69,7 @@ namespace code.Handlers
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                connection.Open();
                 SqlCommand command = new SqlCommand($"SELECT * FROM Producto",
                     connection);
                 using (SqlDataReader dataReader = command.ExecuteReader())
